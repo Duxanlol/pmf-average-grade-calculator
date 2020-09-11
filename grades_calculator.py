@@ -10,7 +10,6 @@ def login_and_get_table_as_source():
     speed = 1 
     options = Options()
     options.add_argument("--headless")
-    options.add_argument("--log-level=3")
     driver = webdriver.Chrome(ChromeDriverManager().install(),options=options)
     driver.get('https://eportal.pmf.uns.ac.rs/')
     sleep(speed)
@@ -45,12 +44,20 @@ def format_data(data):
         grade['prof'] = entry[1]
         grade['time'] = entry[2]
         grade['grade'] = entry[4].replace('Položen\n','')
+        grade['espb'] = entry[6]
         grades.append(grade)
     return grades
 
 def calculate_sum(grades):
     return sum([int(grade['grade']) for grade in grades])/len(grades)
 
+def calculate_espb(grades):
+    return sum([int(grade['espb']) for grade in grades])
+
+def full_report(grades):
+    print("Polozeno",len(grades), "predmeta, sa prosekom", '{0:.3g}'.format(calculate_sum(grades)))
+    print("Ostvareno", str(calculate_espb(grades)),"ESPB bodova")
+
+
 if __name__ == "__main__":
-    print(calculate_sum(format_data(parse_table(login_and_get_table_as_source()))))
-    
+    full_report(format_data(parse_table(login_and_get_table_as_source())))
