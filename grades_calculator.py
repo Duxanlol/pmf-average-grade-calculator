@@ -61,3 +61,4 @@ def full_report(grades):
 
 if __name__ == "__main__":
     full_report(format_data(parse_table(login_and_get_table_as_source())))
+#
