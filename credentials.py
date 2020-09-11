@@ -1,4 +1,4 @@
 login = {
-    'username':'104/18',
-    'password':'Dedacar12NA'
+    'username':'Your username here.',
+    'password':'Your password here.'
 }
